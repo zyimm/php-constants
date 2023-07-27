@@ -1,0 +1,17 @@
+{
+    "name": "zyimm/php-constants",
+    "description": "php项目枚举常量配置管理&调用包",
+    "require": {
+        "php": ">=7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Zyimm\\PhpConstants\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "zyimm"
+        }
+    ]
+}
