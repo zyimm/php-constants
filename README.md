@@ -1,5 +1,11 @@
 # php项目枚举常量配置管理&调用包
 
+安装
+
+```shell
+composer  require zyimm/php-constants
+```
+
 ## 使用示例
 
 以一个简单流程配置为例:
