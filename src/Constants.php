@@ -5,7 +5,55 @@ namespace Zyimm\PhpConstants;
 class Constants
 {
     /**
-     * 获取map
+     * map 转 list.
+     *
+     * @param array|string $const
+     * @param string[]     $keys
+     *
+     * @return array
+     */
+    public static function getMapList($const, array $keys = ['value', 'title']): array
+    {
+        $map = $map_list = [];
+        if (!empty($const)) {
+            if (!is_array($const)) {
+                if (property_exists(static::class, $const)) {
+                    $map = array_column(static::${$const}, 'title', 'value');
+                }
+                if (method_exists(static::class, $const)) {
+                    $map = array_column(call_user_func([static::class, $const]), 'title', 'value');
+                }
+            } else {
+                $map = $const;
+            }
+        }
+        list($value, $title) = $keys;
+        foreach ($map as $k => $v) {
+            $map_list[] = [
+                $value => $v,
+                $title => $k
+            ];
+        }
+        return $map_list;
+    }
+
+    /**
+     * getValue.
+     *
+     * @param string $title
+     * @param string $const
+     *
+     * @return int|string
+     */
+    public static function getValue(string $title = '', string $const = '')
+    {
+        $map = self::getMap($const);
+        $map = array_flip($map);
+        return $map[$title] ?? '';
+    }
+
+    /**
+     * 获取map.
      *
      * @param string $const
      *
@@ -24,22 +72,6 @@ class Constants
         return [];
     }
 
-
-    /**
-     * getValue
-     *
-     * @param string $title
-     * @param string $const
-     *
-     * @return int|string
-     */
-    public static function getValue(string $title = '', string $const = '')
-    {
-        $map = self::getMap($const);
-        $map = array_flip($map);
-        return $map[$title] ?? '';
-    }
-
     public static function getValueByKey($key = '', $const = '')
     {
         $map = array_flip(self::getMapKey($const));
@@ -47,7 +79,30 @@ class Constants
     }
 
     /**
-     * getTitle
+     * getMapKey.
+     *
+     * @param string $const
+     *
+     * @return array
+     */
+    public static function getMapKey(string $const = ''): array
+    {
+        $map = $temp = [];
+        if (property_exists(static::class, $const)) {
+            $temp = static::${$const};
+        }
+
+        if (method_exists(static::class, $const)) {
+            $temp = call_user_func([static::class, $const]);
+        }
+        foreach ($temp as $k => $v) {
+            $map[$v['value']] = $k;
+        }
+        return $map;
+    }
+
+    /**
+     * getTitle.
      *
      * @param string $value
      * @param string $const
@@ -61,7 +116,7 @@ class Constants
     }
 
     /**
-     * getMapWithTitle
+     * getMapWithTitle.
      *
      * @param string $const
      *
@@ -91,9 +146,8 @@ class Constants
         return $map;
     }
 
-
     /**
-     * getMapWithValue
+     * getMapWithValue.
      *
      * @param string $const
      *
@@ -103,28 +157,5 @@ class Constants
     {
         $map = self::getMap($const);
         return array_keys($map);
-    }
-
-    /**
-     * getMapKey
-     *
-     * @param string $const
-     *
-     * @return array
-     */
-    public static function getMapKey(string $const = ''): array
-    {
-        $map = $temp = [];
-        if (property_exists(static::class, $const)) {
-            $temp = static::${$const};
-        }
-
-        if (method_exists(static::class, $const)) {
-            $temp = call_user_func([static::class, $const]);
-        }
-        foreach ($temp as $k => $v) {
-            $map[$v['value']] = $k;
-        }
-        return $map;
     }
 }

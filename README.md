@@ -36,13 +36,13 @@ class FlowConst extends \Zyimm\PhpConstants\Constants
 
 
 ```
-1. 获取某个枚举数值
+1.获取某个枚举数值 
 ```php
 FlowConst::getValueByKey('wait', 'status'); // 1
 FlowConst::getValueByKey('cancel', 'status'); // 0
 ```
 
-2. 获取枚举数值map
+2.获取枚举数值map 
 ```php
 FlowConst::getMap('status');// [0=>'待审核', 1=> '通过' ....]
 ```
