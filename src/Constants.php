@@ -30,8 +30,8 @@ class Constants
         list($value, $title) = $keys;
         foreach ($map as $k => $v) {
             $map_list[] = [
-                $value => $v,
-                $title => $k
+                $value => $k,
+                $title => $v
             ];
         }
         return $map_list;
