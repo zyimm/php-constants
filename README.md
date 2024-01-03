@@ -46,3 +46,23 @@ FlowConst::getValueByKey('cancel', 'status'); // 0
 ```php
 FlowConst::getMap('status');// [0=>'待审核', 1=> '通过' ....]
 ```
+
+3.map转list
+```php
+FlowConst::getMapList('status');
+/**
+* [ 
+ * [
+ *  'value' => 0,
+ *  'title' => '待审核'
+ * ],
+ * [
+ *  'value' => 1,
+ *  'title' => '通过'
+ * ]
+ * 
+ * ]
+* 
+* 
+ */
+```
